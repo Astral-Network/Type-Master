@@ -1,256 +1,643 @@
+<!-- © 2025 Astral Network All Rights Reserved. This Code Is License Under MIT, View The Documentation https://mit-license.org/-->
+
+
+
+
 <!doctype html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="utf-8" />
+
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+
   <title>Typing Test — Declaration of Independence</title>
+
   <style>
-    :root{--bg:#0f1724;--text:#e6eef8;--muted:#98a2b3;--correct:#2dd4bf;--wrong:#fb7185}
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:#071427;color:var(--text);overflow:hidden}
-    .wrap{width:75%;margin:auto;padding:40px 0;display:flex;flex-direction:column;align-items:center;}
-    h1{font-size:32px;margin-bottom:16px;text-align:center}
-    .subtitle{text-align:center;color:var(--muted);margin-bottom:24px}
-    .textBox{background:#071124;border-radius:12px;padding:60px 80px;width:100%;height:50vh;border:1px solid rgba(255,255,255,0.08);font-size:48px;line-height:1.6;overflow:hidden;position:relative}
-    .char{display:inline-block;white-space:pre-wrap}
-    .char.correct{color:var(--correct)}
-    .char.wrong{color:var(--wrong);text-decoration:underline}
-    .controls{display:flex;gap:12px;align-items:center;margin-top:28px;flex-wrap:wrap;justify-content:center;font-size:18px}
-    .btn{background:transparent;border:1px solid rgba(255,255,255,0.08);padding:10px 18px;border-radius:8px;color:var(--text);cursor:pointer}
-    .btn.secondary{color:var(--muted)}
-    .status{color:var(--muted)}
-    .hiddenInput{position:fixed;left:-9999px;top:-9999px;opacity:0}
-    .hint{text-align:center;margin-top:20px;color:var(--muted);font-size:14px}
+
+    :root {
+
+        --bg: #0f1724;
+
+        --text: #e6eef8;
+
+        --muted: #98a2b3;
+
+        --correct: #2dd4bf;
+
+        --wrong: #fb7185
+
+    }
+
+
+    * {
+
+        box-sizing: border-box;
+
+        margin: 0;
+
+        padding: 0
+
+    }
+
+
+    html,
+
+    body {
+
+        height: 100%;
+
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+
+        background: #071427;
+
+        color: var(--text);
+
+        overflow: hidden
+
+    }
+
+
+    .wrap {
+
+        width: 75%;
+
+        margin: auto;
+
+        padding: 40px 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+    }
+
+
+    h1 {
+
+        font-size: 32px;
+
+        margin-bottom: 16px;
+
+        text-align: center
+
+    }
+
+
+    .subtitle {
+
+        text-align: center;
+
+        color: var(--muted);
+
+        margin-bottom: 24px
+
+    }
+
+
+    .textBox {
+
+        background: #071124;
+
+        border-radius: 12px;
+
+        padding: 60px 80px;
+
+        width: 100%;
+
+        height: 50vh;
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        font-size: 48px;
+
+        line-height: 1.6;
+
+        overflow: hidden;
+
+        position: relative
+
+    }
+
+
+    .char {
+
+        display: inline-block;
+
+        white-space: pre-wrap
+
+    }
+
+
+    .char.correct {
+
+        color: var(--correct)
+
+    }
+
+
+    .char.wrong {
+
+        color: var(--wrong);
+
+        text-decoration: underline
+
+    }
+
+
+    .controls {
+
+        display: flex;
+
+        gap: 12px;
+
+        align-items: center;
+
+        margin-top: 28px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        font-size: 18px
+
+    }
+
+
+    .btn {
+
+        background: transparent;
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        padding: 10px 18px;
+
+        border-radius: 8px;
+
+        color: var(--text);
+
+        cursor: pointer
+
+    }
+
+
+    .btn.secondary {
+
+        color: var(--muted)
+
+    }
+
+
+    .status {
+
+        color: var(--muted)
+
+    }
+
+
+    .hiddenInput {
+
+        position: fixed;
+
+        left: -9999px;
+
+        top: -9999px;
+
+        opacity: 0
+
+    }
+
+
+    .hint {
+
+        text-align: center;
+
+        margin-top: 20px;
+
+        color: var(--muted);
+
+        font-size: 14px
+
+    }
+
   </style>
+
 </head>
+
 <body>
+
   <div class="wrap">
+
+  <button class="btn">Settings</button>
+
     <h1>Typing Test — Declaration of Independence</h1>
+
     <div class="subtitle">Type for 1 minute. The timer will stop automatically and show your score.</div>
+
 
     <div id="textBox" class="textBox" tabindex="0"></div>
 
+
     <div class="controls">
+
       <button id="startBtn" class="btn">Start</button>
+
       <button id="resetBtn" class="btn secondary">Reset</button>
+
       <div class="status"><span id="timer">60</span>s | WPM: <span id="wpm">0</span> | Accuracy: <span id="accuracy">100</span>%</div>
+
     </div>
+
 
     <div class="hint">Click the area above to focus. You have 60 seconds — type as fast and accurately as you can!</div>
 
-    <input id="hiddenInput" class="hiddenInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+
+    <input id="hiddenInput" class="hiddenInput" autocomplete="true" autocorrect="true" autocapitalize="true" spellcheck="false" />
+
   </div>
 
+    <h1>&copy; 2025 Astral Network All Rights Reserved.</h1>
+
+      <!-- ↓ rawText (THE WORDS IN THE TEST) The Text in the text can be changed. Remove all words EXCEPT the (`) DO NOT REMOVE THE (`) THIS WILL BREAK THE CODE.  EXAMPLE: `DEMO` THIS ISN'T THE ONE THAT'S THIS (') IT'S SOMETHING ELSE COPY  AND PASTE (`) -->
+
   <script>
+
+  
+
 const rawText = `The unanimous Declaration of the thirteen united States of America, When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature's God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.
+
 
 We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.--That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed, --That whenever any Form of Government becomes destructive of these ends, it is the Right of the People to alter or to abolish it, and to institute new Government, laying its foundation on such principles and organizing its powers in such form, as to them shall seem most likely to effect their Safety and Happiness. Prudence, indeed, will dictate that Governments long established should not be changed for light and transient causes; and accordingly all experience hath shewn, that mankind are more disposed to suffer, while evils are sufferable, than to right themselves by abolishing the forms to which they are accustomed. But when a long train of abuses and usurpations, pursuing invariably the same Object evinces a design to reduce them under absolute Despotism, it is their right, it is their duty, to throw off such Government, and to provide new Guards for their future security.--Such has been the patient sufferance of these Colonies; and such is now the necessity which constrains them to alter their former Systems of Government. The history of the present King of Great Britain is a history of repeated injuries and usurpations, all having in direct object the establishment of an absolute Tyranny over these States. To prove this, let Facts be submitted to a candid world.
 
+
 He has refused his Assent to Laws, the most wholesome and necessary for the public good.
+
 
 He has forbidden his Governors to pass Laws of immediate and pressing importance, unless suspended in their operation till his Assent should be obtained; and when so suspended, he has utterly neglected to attend to them.
 
+
 He has refused to pass other Laws for the accommodation of large districts of people, unless those people would relinquish the right of Representation in the Legislature, a right inestimable to them and formidable to tyrants only.
+
 
 He has called together legislative bodies at places unusual, uncomfortable, and distant from the depository of their public Records, for the sole purpose of fatiguing them into compliance with his measures.
 
+
 He has dissolved Representative Houses repeatedly, for opposing with manly firmness his invasions on the rights of the people.
+
 
 He has refused for a long time, after such dissolutions, to cause others to be elected; whereby the Legislative powers, incapable of Annihilation, have returned to the People at large for their exercise; the State remaining in the mean time exposed to all the dangers of invasion from without, and convulsions within.
 
+
 He has endeavoured to prevent the population of these States; for that purpose obstructing the Laws for Naturalization of Foreigners; refusing to pass others to encourage their migrations hither, and raising the conditions of new Appropriations of Lands.
+
 
 He has obstructed the Administration of Justice, by refusing his Assent to Laws for establishing Judiciary powers.
 
+
 He has made Judges dependent on his Will alone, for the tenure of their offices, and the amount and payment of their salaries.
+
 
 He has erected a multitude of New Offices, and sent hither swarms of Officers to harrass our people, and eat out their substance.
 
+
 He has kept among us, in times of peace, Standing Armies without the Consent of our legislatures.
+
 
 He has affected to render the Military independent of and superior to the Civil power.
 
+
 He has combined with others to subject us to a jurisdiction foreign to our constitution, and unacknowledged by our laws; giving his Assent to their Acts of pretended Legislation:
+
 
 For Quartering large bodies of armed troops among us:
 
+
 For protecting them, by a mock Trial, from punishment for any Murders which they should commit on the Inhabitants of these States:
+
 
 For cutting off our Trade with all parts of the world:
 
+
 For imposing Taxes on us without our Consent:
+
 
 For depriving us in many cases, of the benefits of Trial by Jury:
 
+
 For transporting us beyond Seas to be tried for pretended offences:
+
 
 For abolishing the free System of English Laws in a neighbouring Province, establishing therein an Arbitrary government, and enlarging its Boundaries so as to render it at once an example and fit instrument for introducing the same absolute rule into these Colonies:
 
+
 For taking away our Charters, abolishing our most valuable Laws, and altering fundamentally the Forms of our Governments:
+
 
 For suspending our own Legislatures, and declaring themselves invested with power to legislate for us in all cases whatsoever.
 
+
 He has abdicated Government here, by declaring us out of his Protection and waging War against us.
+
 
 He has plundered our seas, ravaged our Coasts, burnt our towns, and destroyed the lives of our people.
 
+
 He is at this time transporting large Armies of foreign Mercenaries to compleat the works of death, desolation and tyranny, already begun with circumstances of Cruelty & perfidy scarcely paralleled in the most barbarous ages, and totally unworthy the Head of a civilized nation.
+
 
 He has constrained our fellow Citizens taken Captive on the high Seas to bear Arms against their Country, to become the executioners of their friends and Brethren, or to fall themselves by their Hands.
 
+
 He has excited domestic insurrections amongst us, and has endeavoured to bring on the inhabitants of our frontiers, the merciless Indian Savages, whose known rule of warfare, is an undistinguished destruction of all ages, sexes and conditions.
+
 
 In every stage of these Oppressions We have Petitioned for Redress in the most humble terms: Our repeated Petitions have been answered only by repeated injury. A Prince, whose character is thus marked by every act which may define a Tyrant, is unfit to be the ruler of a free people.
 
+
 Nor have We been wanting in attentions to our Brittish brethren. We have warned them from time to time of attempts by their legislature to extend an unwarrantable jurisdiction over us. We have reminded them of the circumstances of our emigration and settlement here. We have appealed to their native justice and magnanimity, and we have conjured them by the ties of our common kindred to disavow these usurpations, which, would inevitably interrupt our connections and correspondence. They too have been deaf to the voice of justice and of consanguinity. We must, therefore, acquiesce in the necessity, which denounces our Separation, and hold them, as we hold the rest of mankind, Enemies in War, in Peace Friends.
+
 
 We, therefore, the Representatives of the united States of America, in General Congress, Assembled, appealing to the Supreme Judge of the world for the rectitude of our intentions, do, in the Name, and by Authority of the good People of these Colonies, solemnly publish and declare, That these United Colonies are, and of Right ought to be Free and Independent States; that they are Absolved from all Allegiance to the British Crown, and that all political connection between them and the State of Great Britain, is and ought to be totally dissolved; and that as Free and Independent States, they have full Power to levy War, conclude Peace, contract Alliances, establish Commerce, and to do all other Acts and Things which Independent States may of right do. And for the support of this Declaration, with a firm reliance on the protection of divine Providence, we mutually pledge to each other our Lives, our Fortunes and our sacred Honor.`;
 
+// ↓ ONLY KNOW WHAT YOU'RE DOING FOR THE REMAINING SCRIPT!
+
 const text = rawText.replace(/\s+/g, " ").trim();
+
 const textBox = document.getElementById("textBox");
+
 const hiddenInput = document.getElementById("hiddenInput");
+
 const startBtn = document.getElementById("startBtn");
+
 const resetBtn = document.getElementById("resetBtn");
+
 const timerEl = document.getElementById("timer");
+
 const wpmEl = document.getElementById("wpm");
+
 const accuracyEl = document.getElementById("accuracy");
+
 textBox.scrollTop = 0;
 
+
 let index = 0,
+
   correct = 0,
+
   wrong = 0,
+
   started = false,
+
   timer = 60,
+
   interval,
+
   startTime = null;
 
+
 function renderText() {
+
   textBox.innerHTML = "";
+
   for (let i = 0; i < text.length; i++) {
+
     const span = document.createElement("span");
+
     span.className = "char";
+
     span.dataset.index = i;
+
     span.textContent = text[i];
+
     textBox.appendChild(span);
+
   }
+
 }
+
 
 function focusInput() {
+
   hiddenInput.focus();
+
 }
+
 
 function updateStats() {
+
   const totalTyped = correct + wrong;
+
   const elapsed = startTime ? (Date.now() - startTime) / 1000 : 0; // seconds
+
   const elapsedMinutes = elapsed > 0 ? elapsed / 60 : 1 / 60;
+
   const accuracy = totalTyped > 0 ? Math.round((correct / totalTyped) * 100) : 100;
+
   const baseWpm = Math.round((correct / 5) / elapsedMinutes);
+
   const adjustedWpm = Math.round(baseWpm * (accuracy / 100));
+
 
   accuracyEl.textContent = accuracy;
+
   wpmEl.textContent = isFinite(adjustedWpm) && adjustedWpm >= 0 ? adjustedWpm : 0;
+
 }
+
 
 function endTest() {
+
   started = false;
+
   clearInterval(interval);
+
   hiddenInput.blur();
 
+
   const totalTyped = correct + wrong;
+
   const elapsed = startTime ? (Date.now() - startTime) / 1000 : 60;
+
   const elapsedMinutes = elapsed > 0 ? elapsed / 60 : 1 / 60;
+
   const accuracy = totalTyped > 0 ? Math.round((correct / totalTyped) * 100) : 100;
+
   const baseWpm = Math.round((correct / 5) / elapsedMinutes);
+
   const adjustedWpm = Math.round(baseWpm * (accuracy / 100));
+
 }
+
 
 function start() {
+
   if (started) return;
+
   index = 0;
+
   correct = 0;
+
   wrong = 0;
+
   timer = 60;
+
   renderText();
+
   textBox.scrollTop = 0;
+
   updateStats();
+
   started = true;
+
   startTime = Date.now();
+
   focusInput();
 
+
   clearInterval(interval);
+
   interval = setInterval(() => {
+
     timer--;
+
     timerEl.textContent = timer;
+
     updateStats();
+
     if (timer <= 0) endTest();
+
   }, 1000);
+
 }
+
 
 function reset() {
+
   clearInterval(interval);
+
   started = false;
+
   index = correct = wrong = 0;
+
   timer = 60;
+
   timerEl.textContent = "60";
+
   wpmEl.textContent = "0";
+
   accuracyEl.textContent = "100";
+
   renderText();
+
   textBox.scrollTop = 0;
+
   focusInput();
+
 }
+
 
 function handleTyping(e) {
+
   if (!started) return;
 
+
   if (e.key === "Backspace") {
+
     e.preventDefault();
+
     if (index > 0) {
+
       index--;
+
       const span = document.querySelector(`.char[data-index='${index}']`);
+
       if (span.classList.contains("correct")) correct--;
+
       else if (span.classList.contains("wrong")) wrong--;
+
       span.classList.remove("correct", "wrong");
+
       updateStats();
+
     }
+
     return;
+
   }
+
 
   if (e.key.length !== 1) return;
+
   e.preventDefault();
+
   const expected = text[index];
+
   const span = document.querySelector(`.char[data-index='${index}']`);
+
   if (!span) return;
 
+
   if (e.key === expected) {
+
     span.classList.add("correct");
+
     correct++;
+
   } else {
+
     span.classList.add("wrong");
+
     wrong++;
+
   }
+
 
   index++;
+
   updateStats();
 
+
   const next = document.querySelector(`.char[data-index='${index}']`);
+
   if (next) {
+
     const rect = next.getBoundingClientRect();
+
     textBox.scrollTo({
+
       top: textBox.scrollTop + rect.top - textBox.clientHeight / 2,
+
       behavior: "smooth",
+
     });
+
   }
 
+
   if (index >= text.length) endTest();
+
 }
 
+
 textBox.addEventListener("click", focusInput);
+
 hiddenInput.addEventListener("keydown", handleTyping);
+
 startBtn.addEventListener("click", start);
+
 resetBtn.addEventListener("click", reset);
 
+
 renderText();
+
 window.addEventListener("load", () => setTimeout(focusInput, 100));
+
   </script>
+
 </body>
+
 </html>
